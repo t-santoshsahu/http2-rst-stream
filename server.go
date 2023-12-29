@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
 type internalServer struct {
@@ -23,6 +24,8 @@ func initServer(response string, port int16) *internalServer {
 	innerServer := &http.Server{
 		Addr:    fmt.Sprintf(":%d", port),
 		Handler: &internalHandler{response},
+		IdleTimeout: 2 * time.Second,
+
 	}
 	server := &internalServer{
 		innerServer,
